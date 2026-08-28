@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Feedback Report - LinkAudit Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-surface": "#213145",
+                      "on-surface": "#0b1c30",
+                      "on-background": "#0b1c30",
+                      "on-primary-fixed": "#001d32",
+                      "on-primary-container": "#f3f7ff",
+                      "on-primary": "#ffffff",
+                      "on-secondary-container": "#5c636e",
+                      "tertiary-fixed": "#e0e3e5",
+                      "on-secondary": "#ffffff",
+                      "surface": "#f8f9ff",
+                      "on-primary-fixed-variant": "#004b74",
+                      "on-surface-variant": "#404850",
+                      "surface-container-highest": "#d3e4fe",
+                      "surface-bright": "#f8f9ff",
+                      "primary-container": "#0077b5",
+                      "surface-variant": "#d3e4fe",
+                      "secondary-container": "#dae0ed",
+                      "error": "#ba1a1a",
+                      "surface-container": "#e5eeff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "primary-fixed-dim": "#93ccff",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "on-secondary-fixed-variant": "#404752",
+                      "primary": "#005d8f",
+                      "surface-container-high": "#dce9ff",
+                      "secondary": "#585f6a",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#191c1e",
+                      "surface-tint": "#006398",
+                      "tertiary": "#56595b",
+                      "surface-dim": "#cbdbf5",
+                      "tertiary-container": "#6f7274",
+                      "on-tertiary-container": "#f5f7f9",
+                      "secondary-fixed-dim": "#c0c7d4",
+                      "inverse-primary": "#93ccff",
+                      "primary-fixed": "#cde5ff",
+                      "outline-variant": "#bfc7d1",
+                      "surface-container-low": "#eff4ff",
+                      "on-secondary-fixed": "#151c26",
+                      "secondary-fixed": "#dce3f0",
+                      "on-tertiary": "#ffffff",
+                      "outline": "#707881",
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "background": "#f8f9ff",
+                      "on-tertiary-fixed-variant": "#444749"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "container-max": "1200px",
+                      "stack-md": "16px",
+                      "unit": "8px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "40px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "display-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "mono-data": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "mono-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        body {
+            background-color: #e0e3e5; /* tertiary-fixed approximation for base */
+            background-image: radial-gradient(circle at top left, rgba(255,255,255,0.8) 0%, transparent 40%),
+                              radial-gradient(circle at bottom right, rgba(0,93,143,0.05) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-left: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s ease-in-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="text-on-surface font-body-md">
+<!-- TopNavBar -->
+<nav class="hidden md:flex bg-surface/80 dark:bg-on-surface/80 backdrop-blur-xl fixed top-0 w-full border-b border-white/10 dark:border-white/5 shadow-sm flex justify-between items-center h-20 px-margin-desktop max-w-container-max mx-auto z-50">
+<div class="font-display-lg text-headline-md tracking-tighter text-on-surface dark:text-surface-bright font-bold">
+            LinkAudit Pro
+        </div>
+<div class="flex gap-8">
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-300 transition-all duration-200 active:scale-95 font-body-md text-body-md" href="#">Platform</a>
+<a class="text-primary dark:text-primary-fixed font-semibold border-b-2 border-primary transition-all duration-200 active:scale-95 font-body-md text-body-md" href="#">Insights</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-colors duration-300 transition-all duration-200 active:scale-95 font-body-md text-body-md" href="#">Case Studies</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md">Sign In</button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-body-md text-body-md hover:bg-on-primary-fixed-variant transition-colors shadow-sm">Get Started</button>
+</div>
+</nav>
+<!-- Main Layout with SideNav -->
+<div class="flex h-screen pt-20 max-w-[1440px] mx-auto">
+<!-- SideNavBar (Desktop) -->
+<!-- Main Content Area -->
+<main class="flex-1 p-margin-mobile md:p-margin-desktop overflow-y-auto w-full mx-auto max-w-container-max">
+<header class="mb-stack-lg flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+<div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-2">Feedback Report</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Your comprehensive LinkedIn profile diagnosis.</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-lg font-label-caps text-label-caps hover:bg-on-primary-fixed-variant transition-colors shadow-sm flex items-center gap-2 w-fit">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                    Export PDF Report
+                </button>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Profile Score Gauge -->
+<div class="glass-card rounded-xl p-stack-lg md:col-span-4 flex flex-col items-center justify-center text-center h-full min-h-[300px]">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-stack-md w-full text-left">Profile Strength</h2>
+<div class="relative w-48 h-48 flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 120 120">
+<!-- Track -->
+<circle cx="60" cy="60" fill="none" r="54" stroke="#e5eeff" stroke-width="8"></circle>
+<!-- Progress -->
+<circle class="progress-ring__circle" cx="60" cy="60" fill="none" r="54" stroke="#005d8f" stroke-dasharray="339.292" stroke-dashoffset="67.858" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-display-lg text-display-lg text-primary">80</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">/ 100</span>
+</div>
+</div>
+<p class="mt-stack-sm font-body-md text-body-md text-on-surface-variant">Strong foundation, minor tweaks needed.</p>
+</div>
+<!-- AI Recommendations -->
+<div class="glass-card rounded-xl p-stack-lg md:col-span-8 flex flex-col">
+<div class="flex items-center gap-2 mb-stack-md">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">AI Recommendations</h2>
+</div>
+<ul class="space-y-4 flex-1">
+<li class="flex items-start gap-3 p-4 bg-surface-container-lowest rounded-lg border border-outline-variant/30">
+<span class="material-symbols-outlined text-amber-500 mt-1" data-icon="warning">warning</span>
+<div>
+<h4 class="font-mono-data text-mono-data text-on-surface mb-1">Headline lacks specific keywords</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Incorporate terms like "SaaS", "B2B", or "Growth" to improve search visibility among recruiters.</p>
+</div>
+</li>
+<li class="flex items-start gap-3 p-4 bg-surface-container-lowest rounded-lg border border-outline-variant/30">
+<span class="material-symbols-outlined text-green-600 mt-1" data-icon="check_circle">check_circle</span>
+<div>
+<h4 class="font-mono-data text-mono-data text-on-surface mb-1">About section is highly engaging</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Excellent use of storytelling. Consider adding a clear call-to-action at the very end.</p>
+</div>
+</li>
+<li class="flex items-start gap-3 p-4 bg-surface-container-lowest rounded-lg border border-outline-variant/30">
+<span class="material-symbols-outlined text-amber-500 mt-1" data-icon="warning">warning</span>
+<div>
+<h4 class="font-mono-data text-mono-data text-on-surface mb-1">Experience lacks quantifiable metrics</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Add numbers to your achievements (e.g., "Increased revenue by 20%") to demonstrate concrete impact.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Detailed Breakdown -->
+<div class="md:col-span-12 mt-stack-md">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-stack-md">Section Breakdown</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Headline -->
+<div class="glass-card rounded-xl p-stack-md flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-mono-data text-mono-data text-on-surface">Headline</h3>
+<div class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="circle">circle</span> Amber
+                                </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-1">"Marketing Professional helping businesses grow."</p>
+<div class="bg-surface-container py-2 px-3 rounded text-sm text-on-surface">
+<span class="font-semibold">Tip:</span> Make it outcome-focused.
+                            </div>
+</div>
+<!-- About -->
+<div class="glass-card rounded-xl p-stack-md flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-mono-data text-mono-data text-on-surface">About</h3>
+<div class="bg-green-100 text-green-800 px-2 py-1 rounded-full font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="circle">circle</span> Green
+                                </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-1">Strong narrative arc, covers major career pivots well. Good keyword density.</p>
+<div class="flex gap-2 flex-wrap">
+<span class="bg-surface-container-high text-primary px-3 py-1 rounded-xl font-label-caps text-label-caps">Storytelling</span>
+<span class="bg-surface-container-high text-primary px-3 py-1 rounded-xl font-label-caps text-label-caps">Clarity</span>
+</div>
+</div>
+<!-- Experience -->
+<div class="glass-card rounded-xl p-stack-md flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-mono-data text-mono-data text-on-surface">Experience</h3>
+<div class="bg-amber-100 text-amber-800 px-2 py-1 rounded-full font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="circle">circle</span> Amber
+                                </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-1">Descriptions are currently task-based rather than achievement-based.</p>
+<div class="bg-surface-container py-2 px-3 rounded text-sm text-on-surface">
+<span class="font-semibold">Action:</span> Rewrite bullets using XYZ formula.
+                            </div>
+</div>
+</div>
+</div>
+<!-- CTA Banner -->
+</div>
+<!-- Spacer for mobile bottom nav -->
+<div class="h-24 md:hidden"></div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only - Fallback for when SideNav is hidden, though instructions suggest keeping layout fluid) -->
+<!-- Assuming this acts as a primary destination based on instructions -->
+<script>
+        // Simple script to animate the gauge if needed, though CSS handles the initial draw
+        document.addEventListener('DOMContentLoaded', () => {
+            const circle = document.querySelector('.progress-ring__circle');
+            if(circle) {
+                // 80% of circumference (339.292 * 0.2 = 67.858 offset)
+                setTimeout(() => {
+                    circle.style.strokeDashoffset = '67.858';
+                }, 100);
+            }
+        });
+    </script>
+</body></html>

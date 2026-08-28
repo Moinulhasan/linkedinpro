@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LinkAudit Pro - Diagnosis in Progress</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#213145",
+                        "on-surface": "#0b1c30",
+                        "on-background": "#0b1c30",
+                        "on-primary-fixed": "#001d32",
+                        "on-primary-container": "#f3f7ff",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#5c636e",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "on-primary-fixed-variant": "#004b74",
+                        "on-surface-variant": "#404850",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-bright": "#f8f9ff",
+                        "primary-container": "#0077b5",
+                        "surface-variant": "#d3e4fe",
+                        "secondary-container": "#dae0ed",
+                        "error": "#ba1a1a",
+                        "surface-container": "#e5eeff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed-dim": "#93ccff",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-secondary-fixed-variant": "#404752",
+                        "primary": "#005d8f",
+                        "surface-container-high": "#dce9ff",
+                        "secondary": "#585f6a",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#191c1e",
+                        "surface-tint": "#006398",
+                        "tertiary": "#56595b",
+                        "surface-dim": "#cbdbf5",
+                        "tertiary-container": "#6f7274",
+                        "on-tertiary-container": "#f5f7f9",
+                        "secondary-fixed-dim": "#c0c7d4",
+                        "inverse-primary": "#93ccff",
+                        "primary-fixed": "#cde5ff",
+                        "outline-variant": "#bfc7d1",
+                        "surface-container-low": "#eff4ff",
+                        "on-secondary-fixed": "#151c26",
+                        "secondary-fixed": "#dce3f0",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#707881",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#444749"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "container-max": "1200px",
+                        "stack-md": "16px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "mono-data": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "mono-data": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pulse-orb {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.1; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-on-surface text-surface-bright min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation omitted as per Shell Navigation logic for Transactional/Linear screens -->
+<main class="flex-grow flex items-center justify-center p-margin-mobile md:p-margin-desktop relative overflow-hidden">
+<!-- Ambient Background FX -->
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none flex justify-center items-center">
+<div class="w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] absolute opacity-50"></div>
+<div class="w-[400px] h-[400px] bg-primary-fixed-dim/10 rounded-full blur-[80px] absolute translate-x-1/2 translate-y-1/2"></div>
+</div>
+<div class="z-10 max-w-2xl w-full flex flex-col items-center text-center space-y-stack-lg">
+<!-- Graphic / Animation Area -->
+<div class="relative w-64 h-64 flex justify-center items-center mb-stack-md">
+<div class="absolute inset-0 rounded-full border border-primary/20 pulse-orb"></div>
+<div class="absolute inset-4 rounded-full border border-primary/40 pulse-orb" style="animation-delay: 0.5s;"></div>
+<div class="w-24 h-24 rounded-full bg-primary/20 backdrop-blur-md flex justify-center items-center border border-primary/30 shadow-[0_0_40px_rgba(0,93,143,0.4)]">
+<span class="material-symbols-outlined text-primary-fixed text-4xl" style="font-variation-settings: 'FILL' 1;">
+                        memory
+                    </span>
+</div>
+</div>
+<!-- Header -->
+<div class="space-y-stack-sm">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-surface-bright">AI Audit in Progress</h1>
+<p class="font-body-lg text-body-lg text-secondary-fixed-dim max-w-md mx-auto">Please wait while our Silent Strategist analyzes your professional footprint.</p>
+</div>
+<!-- Progress Module -->
+<div class="w-full max-w-md bg-inverse-surface/80 backdrop-blur-xl border-t border-l border-white/10 rounded-xl p-stack-md shadow-2xl relative overflow-hidden">
+<!-- Status Messages -->
+<div class="flex justify-between items-center mb-stack-sm font-mono-data text-mono-data text-surface-dim">
+<span class="transition-opacity duration-300" id="status-text">Analyzing headline impact...</span>
+<span id="progress-percentage">45%</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 bg-on-surface rounded-full overflow-hidden border border-white/5">
+<div class="h-full bg-primary progress-bar-fill w-[45%] relative" id="progress-fill">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] animate-[shimmer_2s_infinite]"></div>
+</div>
+</div>
+<style>
+                    @keyframes shimmer {
+                        100% { transform: translateX(100%); }
+                    }
+                </style>
+</div>
+<div class="pt-stack-lg">
+<p class="font-label-caps text-label-caps text-outline flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+                    SECURE DIAGNOSTIC ENVIRONMENT
+                </p>
+</div>
+</div>
+</main>
+<script>
+        // Simple script to cycle status messages and progress
+        const statuses = [
+            "Analyzing headline impact...",
+            "Evaluating network strength...",
+            "Scanning media richness...",
+            "Assessing keyword density...",
+            "Compiling final strategy..."
+        ];
+        
+        const statusEl = document.getElementById('status-text');
+        const progressFill = document.getElementById('progress-fill');
+        const progressPercentage = document.getElementById('progress-percentage');
+        
+        let currentStep = 0;
+        let progress = 45;
+
+        const updateStatus = () => {
+            if (currentStep >= statuses.length - 1) return;
+            
+            // Fade out
+            statusEl.style.opacity = 0;
+            
+            setTimeout(() => {
+                currentStep++;
+                statusEl.textContent = statuses[currentStep];
+                
+                // Calculate progress
+                progress = Math.min(98, progress + (Math.random() * 15 + 5));
+                progressFill.style.width = `${progress}%`;
+                progressPercentage.textContent = `${Math.round(progress)}%`;
+                
+                // Fade in
+                statusEl.style.opacity = 1;
+            }, 300); // Wait for fade out
+        };
+
+        // Cycle every 2-3 seconds
+        setInterval(updateStatus, 2500);
+    </script>
+</body></html>

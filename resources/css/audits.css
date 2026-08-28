@@ -1,0 +1,190 @@
+.pulse-orb {
+    animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+.progress-bar-fill {
+    transition: width 0.3s ease-out;
+}
+
+.dashboard-bg {
+    background-color: #e0e3e5;
+    background-image: radial-gradient(circle at top left, rgba(255, 255, 255, 0.8) 0%, transparent 40%),
+        radial-gradient(circle at bottom right, rgba(0, 93, 143, 0.05) 0%, transparent 40%);
+    min-height: 100vh;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.progress-ring__circle {
+    transition: stroke-dashoffset 1s ease-in-out;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.audit-report {
+    /* max-width: 780px; */
+    margin: 0 auto;
+}
+
+.audit-report > p:first-child {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #0b1c30;
+    font-weight: 500;
+}
+
+.audit-report h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    color: #0b1c30;
+    border-bottom: 2px solid #005d8f;
+}
+
+.audit-report h2:first-of-type {
+    margin-top: 2rem;
+}
+
+.audit-report h3 {
+    font-size: 19px;
+    font-weight: 600;
+    margin-top: 1.75rem;
+    margin-bottom: 0.6rem;
+    color: #0b1c30;
+}
+
+.audit-report h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    color: #93000a;
+    background: #ffdad6;
+    border-radius: 0.5rem;
+    display: inline-block;
+}
+
+.audit-report p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    color: #404850;
+}
+
+.audit-report ul,
+.audit-report ol {
+    margin: 0 0 1rem 1.25rem;
+    color: #404850;
+}
+
+.audit-report ul ul,
+.audit-report ol ul,
+.audit-report ul ol,
+.audit-report ol ol {
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+}
+
+.audit-report li {
+    margin-bottom: 0.5rem;
+    line-height: 1.65;
+}
+
+.audit-report li > em:first-child {
+    color: #585f6a;
+    font-size: 0.93em;
+}
+
+.audit-report strong {
+    color: #0b1c30;
+}
+
+.audit-report code {
+    background: #dce9ff;
+    color: #005d8f;
+    padding: 0.15rem 0.4rem;
+    border-radius: 9999px;
+    font-size: 0.85em;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.audit-report pre {
+    background: #0b1c30;
+    color: #eaf1ff;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    margin: 0 0 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.audit-report pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    font-weight: 400;
+    white-space: pre;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.audit-report blockquote {
+    margin: 0 0 1.5rem;
+    padding: 0.9rem 1.25rem;
+    background: #eff4ff;
+    border-left: 4px solid #005d8f;
+    border-radius: 0.5rem;
+    color: #0b1c30;
+}
+
+.audit-report blockquote p {
+    margin-bottom: 0;
+}
+
+.audit-report hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #bfc7d1, transparent);
+    margin: 2.5rem 0;
+}
+
+.audit-toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.audit-toc a {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #005d8f;
+    background: #dce9ff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.audit-toc a:hover {
+    background: #cde5ff;
+}
