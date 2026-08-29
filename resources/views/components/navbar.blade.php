@@ -6,16 +6,26 @@
         </a>
 
         <div class="flex items-center gap-stack-md font-body-md text-body-md">
-            @auth
-                <a href="{{ route('dashboard') }}" class="text-on-surface-variant hover:text-primary transition-colors">My Analyses</a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="text-on-surface-variant hover:text-primary transition-colors">Sign Out</button>
-                </form>
+            @guest
+                <button type="button" onclick="window.dispatchEvent(new CustomEvent('open-modal', { detail: 'login' }))" class="bg-primary hover:bg-surface-tint text-on-primary px-5 py-2 rounded-lg transition-all shadow-sm">Sign In</button>
             @else
-                <a href="{{ route('login') }}" class="text-on-surface-variant hover:text-primary transition-colors">Sign In</a>
-                <a href="{{ route('register') }}" class="bg-primary hover:bg-surface-tint text-on-primary px-5 py-2 rounded-lg transition-all shadow-sm">Sign Up</a>
-            @endauth
+                <x-dropdown align="right" width="w-56">
+                    <x-slot name="trigger">
+                        <button type="button" class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-semibold hover:opacity-90 transition-opacity flex-shrink-0">
+                            {{ collect(explode(' ', auth()->user()->name))->map(fn ($n) => $n[0])->take(2)->join('') }}
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <a href="{{ route('dashboard') }}" class="block w-full px-4 py-2.5 text-start text-sm whitespace-nowrap text-on-surface-variant hover:bg-surface-container-lowest transition-colors">My Analyses</a>
+                        <a href="{{ route('profile.edit') }}" class="block w-full px-4 py-2.5 text-start text-sm whitespace-nowrap text-on-surface-variant hover:bg-surface-container-lowest transition-colors">Settings</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="block w-full px-4 py-2.5 text-start text-sm whitespace-nowrap text-on-surface-variant hover:bg-surface-container-lowest transition-colors">Sign Out</button>
+                        </form>
+                    </x-slot>
+                </x-dropdown>
+            @endguest
         </div>
     </div>
 </nav>

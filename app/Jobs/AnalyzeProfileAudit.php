@@ -5,7 +5,10 @@ namespace App\Jobs;
 use App\Models\ProfileAudit;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Smalot\PdfParser\Parser;
 use Throwable;
@@ -24,6 +27,9 @@ class AnalyzeProfileAudit implements ShouldQueue
     {
         $this->audit->update(['status' => 'processing']);
 
+        $provider = config('services.ai_provider', 'gemini');
+        $start = microtime(true);
+
         try {
             $resumeText = (new Parser())
                 ->parseFile(Storage::disk('local')->path($this->audit->pdf_path))
@@ -33,7 +39,7 @@ class AnalyzeProfileAudit implements ShouldQueue
                 throw new \RuntimeException('Could not extract any text from the uploaded PDF.');
             }
 
-            $analysis = $this->askGemini($resumeText);
+            $analysis = $this->askAI($provider, $resumeText);
 
             $this->audit->update([
                 'status' => 'completed',
@@ -43,36 +49,86 @@ class AnalyzeProfileAudit implements ShouldQueue
                 'recommendations' => $analysis['recommendations'] ?? [],
                 'sections' => $analysis['sections'] ?? [],
             ]);
-        } catch (Throwable $e) {
-            $this->audit->update([
-                'status' => 'failed',
-                'error' => $e->getMessage(),
+
+            Log::info('Profile audit analysis succeeded', [
+                'audit_uuid' => $this->audit->uuid,
+                'provider' => $provider,
+                'duration_seconds' => round(microtime(true) - $start, 2),
             ]);
+        } catch (ConnectionException $e) {
+            $this->fail($e, $provider, $start, sprintf(
+                '%s did not respond in time (timed out after %ds). Try again, or switch AI_PROVIDER in .env.',
+                ucfirst($provider),
+                180
+            ));
+        } catch (RequestException $e) {
+            $this->fail($e, $provider, $start, sprintf(
+                '%s API returned an error (HTTP %d): %s',
+                ucfirst($provider),
+                $e->response->status(),
+                str($e->response->body())->limit(300)
+            ));
+        } catch (Throwable $e) {
+            $this->fail($e, $provider, $start, $e->getMessage());
         } finally {
             Storage::disk('local')->delete($this->audit->pdf_path);
         }
     }
 
-    private function askGemini(string $resumeText): array
+    private function fail(Throwable $e, string $provider, float $start, string $userMessage): void
+    {
+        $duration = round(microtime(true) - $start, 2);
+
+        Log::error('Profile audit analysis failed', [
+            'audit_uuid' => $this->audit->uuid,
+            'provider' => $provider,
+            'duration_seconds' => $duration,
+            'exception' => get_class($e),
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ]);
+
+        $this->audit->update([
+            'status' => 'failed',
+            'error' => $userMessage,
+        ]);
+    }
+
+    private function askAI(string $provider, string $resumeText): array
+    {
+        return match ($provider) {
+            'groq' => $this->askGroq($resumeText),
+            default => $this->askGemini($resumeText),
+        };
+    }
+
+    private function buildInstructions(string $resumeText): string
     {
         $masterPromptFile = file_get_contents(base_path('master/linkedin-profile-audit-prompt.md'));
         preg_match('/```\n(.*?)```/s', $masterPromptFile, $matches);
         $masterPrompt = trim($matches[1] ?? $masterPromptFile);
 
-        $instructions = $masterPrompt
-            ."\n\nReturn your entire response as JSON matching the response schema. "
-            ."`report_markdown` must contain the FULL audit exactly as specified above (all numbered sections, in Markdown). "
-            ."`score` is your overall profile strength score (0-100). `verdict` is one short sentence summarizing the profile's "
-            ."current state. `recommendations` are the 3-4 most important AI recommendations (mix of \"warning\" and \"success\" severity). "
-            ."`sections` breaks down 3-4 major profile sections (e.g. Headline, About, Experience, Skills) each with a green/amber/red status, "
-            ."a one-sentence summary, and a one-sentence actionable tip."
+        return $masterPrompt
+            ."\n\nReturn your entire response as a single JSON object with exactly these keys: "
+            ."`score` (your overall profile strength score, 0-100, integer), "
+            ."`verdict` (one short sentence summarizing the profile's current state), "
+            ."`recommendations` (array of 3-4 objects, each with `severity` either \"success\" or \"warning\", `title`, and `description`), "
+            ."`sections` (array of 3-4 objects breaking down major profile sections e.g. Headline, About, Experience, Skills, each with "
+            ."`name`, `status` either \"green\", \"amber\", or \"red\", `summary`, and `tip`), "
+            ."and `report_markdown` (a string containing the FULL audit exactly as specified above, all numbered sections, in Markdown). "
+            ."Return only the JSON object, no other text."
             ."\n\nHere is the LinkedIn profile to audit:\n\n".$resumeText;
+    }
+
+    private function askGemini(string $resumeText): array
+    {
+        $instructions = $this->buildInstructions($resumeText);
 
         $model = config('services.gemini.model');
         $key = config('services.gemini.key');
         $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent";
 
-        $response = Http::timeout(180)
+        $response = Http::timeout(300)
             ->withHeaders([
                 'x-goog-api-key' => $key,
                 'Content-Type' => 'application/json',
@@ -126,6 +182,29 @@ class AnalyzeProfileAudit implements ShouldQueue
             ->throw();
 
         $text = $response->json('candidates.0.content.parts.0.text') ?? '{}';
+
+        return json_decode($text, true) ?? [];
+    }
+
+    private function askGroq(string $resumeText): array
+    {
+        $instructions = $this->buildInstructions($resumeText);
+
+        $model = config('services.groq.model');
+        $key = config('services.groq.key');
+
+        $response = Http::timeout(300)
+            ->withToken($key)
+            ->post('https://api.groq.com/openai/v1/chat/completions', [
+                'model' => $model,
+                'messages' => [
+                    ['role' => 'user', 'content' => $instructions],
+                ],
+                'response_format' => ['type' => 'json_object'],
+            ])
+            ->throw();
+
+        $text = $response->json('choices.0.message.content') ?? '{}';
 
         return json_decode($text, true) ?? [];
     }

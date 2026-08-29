@@ -35,7 +35,9 @@ class User extends Authenticatable
 
     public function remainingAnalyses(): int
     {
-        return max(0, self::FREE_ANALYSIS_LIMIT - $this->profileAudits()->count());
+        $used = $this->profileAudits()->where('status', '!=', 'failed')->count();
+
+        return max(0, self::FREE_ANALYSIS_LIMIT - $used);
     }
 
     /**

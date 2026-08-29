@@ -7,7 +7,7 @@
 
     <main class="relative z-10 pt-[120px] pb-32">
         <x-hero />
-        <x-feature-cards />
+        <x-how-it-works />
     </main>
 
     <x-footer />

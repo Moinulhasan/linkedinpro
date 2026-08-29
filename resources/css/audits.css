@@ -12,22 +12,6 @@
     transition: width 0.3s ease-out;
 }
 
-.dashboard-bg {
-    background-color: #e0e3e5;
-    background-image: radial-gradient(circle at top left, rgba(255, 255, 255, 0.8) 0%, transparent 40%),
-        radial-gradient(circle at bottom right, rgba(0, 93, 143, 0.05) 0%, transparent 40%);
-    min-height: 100vh;
-}
-
-.glass-card {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
-    border-left: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-}
-
 .progress-ring__circle {
     transition: stroke-dashoffset 1s ease-in-out;
     transform: rotate(-90deg);

@@ -21,5 +21,45 @@
     </div>
 
     @yield('content')
+
+    @guest
+        <x-modal name="login" focusable>
+            <div class="glass-panel ambient-shadow p-stack-lg relative">
+                <button type="button" onclick="window.dispatchEvent(new CustomEvent('close-modal', { detail: 'login' }))" class="absolute top-5 right-5 text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="text-center mb-stack-lg">
+                    <h2 class="font-display-lg-mobile text-display-lg-mobile text-on-surface mb-2">Welcome Back</h2>
+                    <p class="text-on-surface-variant text-sm">Continue auditing your LinkedIn profile</p>
+                </div>
+                @include('auth.partials.login-form')
+            </div>
+        </x-modal>
+
+        <x-modal name="register" focusable>
+            <div class="glass-panel ambient-shadow p-stack-lg relative">
+                <button type="button" onclick="window.dispatchEvent(new CustomEvent('close-modal', { detail: 'register' }))" class="absolute top-5 right-5 text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="text-center mb-stack-lg">
+                    <h2 class="font-display-lg-mobile text-display-lg-mobile text-on-surface mb-2">Join LinkAudit Pro</h2>
+                    <p class="text-on-surface-variant text-sm">Get your free recruiter &amp; ATS-readiness audit</p>
+                </div>
+                @include('auth.partials.register-form')
+            </div>
+        </x-modal>
+
+        @php
+            $reopenModal = session('auth_modal')
+                ?? ($errors->has('name') || $errors->has('password_confirmation') ? 'register' : ($errors->any() ? 'login' : null));
+        @endphp
+        @if ($reopenModal)
+            <script>
+                window.addEventListener('DOMContentLoaded', () => {
+                    window.dispatchEvent(new CustomEvent('open-modal', { detail: '{{ $reopenModal }}' }));
+                });
+            </script>
+        @endif
+    @endguest
 </body>
 </html>

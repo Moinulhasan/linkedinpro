@@ -56,7 +56,7 @@ class ProfileAuditController extends Controller
             return Redirect::route('profile-audits.show', $profileAudit);
         }
 
-        return view('audits.processing', ['audit' => $profileAudit]);
+        return Redirect::route('dashboard')->with('pending_status_url', route('profile-audits.status', $profileAudit));
     }
 
     public function status(Request $request, ProfileAudit $profileAudit)

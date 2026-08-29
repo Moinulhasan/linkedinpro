@@ -1,17 +1,57 @@
 const pdfInput = document.querySelector('#pdf-input');
-const pdfTrigger = document.querySelector('#pdf-trigger');
-const pdfLabel = document.querySelector('#pdf-label');
+const dropzone = document.querySelector('#dropzone');
+const dropzoneIcon = document.querySelector('#dropzone-icon');
+const dropzoneText = document.querySelector('#dropzone-text');
+const dropzoneSubtext = document.querySelector('#dropzone-subtext');
 const submitButton = document.querySelector('#analyze-submit');
 const analyzeForm = document.querySelector('#analyze-form');
 const analyzeError = document.querySelector('#analyze-error');
 const analyzeOverlay = document.querySelector('#analyze-overlay');
 
-pdfTrigger?.addEventListener('click', () => pdfInput.click());
+const setSelectedFile = (file) => {
+    if (!file) return;
 
-pdfInput?.addEventListener('change', () => {
-    const file = pdfInput.files[0];
-    pdfLabel.textContent = file ? file.name : 'Upload PDF';
-    submitButton.disabled = !file;
+    dropzoneIcon.textContent = 'task';
+    dropzoneText.textContent = file.name;
+    dropzoneSubtext.textContent = 'Click or drop to replace';
+    submitButton.disabled = false;
+};
+
+dropzone?.addEventListener('click', () => pdfInput.click());
+
+pdfInput?.addEventListener('change', () => setSelectedFile(pdfInput.files[0]));
+
+['dragenter', 'dragover'].forEach((eventName) => {
+    dropzone?.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        dropzone.classList.add('border-primary', 'bg-surface-container-lowest/30');
+    });
+});
+
+['dragleave', 'dragend'].forEach((eventName) => {
+    dropzone?.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        dropzone.classList.remove('border-primary', 'bg-surface-container-lowest/30');
+    });
+});
+
+dropzone?.addEventListener('drop', (event) => {
+    event.preventDefault();
+    dropzone.classList.remove('border-primary', 'bg-surface-container-lowest/30');
+
+    const file = event.dataTransfer.files[0];
+    if (!file) return;
+
+    if (file.type !== 'application/pdf') {
+        if (analyzeError) {
+            analyzeError.textContent = 'Please drop a PDF file.';
+            analyzeError.classList.remove('hidden');
+        }
+        return;
+    }
+
+    pdfInput.files = event.dataTransfer.files;
+    setSelectedFile(file);
 });
 
 analyzeForm?.addEventListener('submit', async (event) => {
